@@ -1,0 +1,54 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    {% tailwind_css%}
+  </head>
+  <body>
+    {% comment %} navbar area {% endcomment %}
+
+    <div class="max-w-[1350px] mx-auto bg-yellow-300">
+      <h1 class="text-center text-4xl py-12 font-medium">UPLOAD YOUR IMAGE HERE</h1>
+      <form action="" method="post" class="text-center bg-yellow-600 py-4" enctype="multipart/form-data">
+       {% csrf_token %}
+        <input type="file" class="" name='image'/>
+        <button
+          class="border-2 border-black py-2 px-8 rounded hover:bg-yellow-700"
+        >
+          Submit
+        </button>
+        <div class='my-3'>
+        <input type="text" placeholder='ENTER IMAGE TITLE' required name='title'>
+        <input type="text" placeholder='ENTER IMAGE DESCRIPTION' required name='description'>
+      </div>
+      </form>
+    </div>
+
+    {% comment %} this is a section of cards {% endcomment %}
+   
+    <div class="max-w-[1350px] grid sm:grid-cols-2 lg:grid-cols-4  mx-auto gap-10 py-16">
+      {% for value in values  %}
+      <div class="shadow hover:shadow-lg overflow-hidden duration-1000 rounded-lg mt-">
+        <div class="overflow-hidden">
+          <img
+            src="{{value.image.url}}"
+            alt=""
+            class="mx-auto hover:scale-125 duration-1000"
+          />
+        </div>
+        <div>
+          <small class='ml-2'>{{value.upload_date}}</small>
+          <h1 class="text-lg mt-3 font-medium text-center"> {{value.title}} </h1>
+          <p class="px-6 py-2 mb-5 text-center">
+            {{ value.description}}
+          </p>
+        </div>
+        
+      </div>
+      {% endfor %}
+      </div>
+  </body>
+</html>
